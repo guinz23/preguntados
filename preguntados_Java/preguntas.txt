@@ -1,0 +1,4 @@
+Paris,La capital de francia,100
+San Jose,La capital de costarica,150
+Managua,La capital de NIcaragua,150
+3.14,cuanto vale pi,150
