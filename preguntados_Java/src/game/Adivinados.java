@@ -148,10 +148,10 @@ public class Adivinados extends javax.swing.JFrame {
 
         lblturn.setFont(new java.awt.Font("AnjaliOldLipi", 2, 14)); // NOI18N
         lblturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(lblturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(248, 400, 190, 29));
+        getContentPane().add(lblturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 190, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon("/home/juangabriel/Imágenes/logo.png")); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 680, 430));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 690, 510));
 
         jMenu1.setText("Comenzar juego");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -205,12 +205,11 @@ public class Adivinados extends javax.swing.JFrame {
         player2.setPuntaje(puntaje);
         logica.stargame(player1, player2());
         txtname.setText(player1.getName());
-        
 
         logica.who_starts();
         if (logica.isX() == true) {
             btnpinchar.setEnabled(true);
-            lblturn.setText("Jugando :"+txtname.getText());
+            lblturn.setText("Jugando :" + txtname.getText());
             lblturn.setBackground(Color.BLUE);
             logica.turn(logica.isX(), txtname.getText().trim());
         } else {
@@ -220,41 +219,45 @@ public class Adivinados extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     logica.turn(logica.isX(), txtmaquina.getText().trim());
-                     btnpinchar.setEnabled(false);
-                      lblturn.setText("Jugando : "+txtmaquina.getText());
-               
-                      btnpinchar.setBackground(Color.BLUE);
+                    btnpinchar.setEnabled(false);
+                    lblturn.setText("Jugando : " + txtmaquina.getText());
+
+                    btnpinchar.setBackground(Color.BLUE);
                 }
             };
             timer.schedule(task, 0, 1000);
-             System.out.println("El juego a comenzado");
-                 timer.cancel();
-          }
-   
+            System.out.println("El juego a comenzado");
+            timer.cancel();
+        }
+
     }//GEN-LAST:event_none
 
     private void btnpincharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpincharActionPerformed
-       logica.upload_questions();
-        LinkedList<preguntas>p= new LinkedList<>();
-         p= logica.getLIsta_preguntas();
-         int contador=Integer.parseInt(txtpuntaje.getText());
+        try {
+              logica.upload_questions();
+        LinkedList<preguntas> p = new LinkedList<>();
+        p = logica.getLIsta_preguntas();
+        int contador = Integer.parseInt(txtpuntaje.getText());
         for (preguntas p1 : p) {
-            int respuesta=JOptionPane.showConfirmDialog( null,p1.getPregunta(), "Seleccione",JOptionPane.YES_NO_OPTION);
-            if (respuesta==JOptionPane.YES_OPTION) {
-                 contador+=1;
-            }
-            if (respuesta==JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(null, "la respuesta  incorrecta");
+         String valor=JOptionPane.showInputDialog(null,p1.getPregunta());
+            if (valor.equals(p1.getRespuesta())) {
+                contador+=p1.getPuntaje();
+            }else{
+              JOptionPane.showMessageDialog(null,"respuesta incorrecta"+"\n"
+                      +"La Respuesta correcta es : "+p1.getRespuesta());
             }
         }
-       txtpuntaje.setText(String.valueOf(contador));
+        txtpuntaje.setText(String.valueOf(contador));
+        } catch (Exception e) {
+            
+        }
     }//GEN-LAST:event_btnpincharActionPerformed
 
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
-   crear_Preguntas p= new crear_Preguntas();
-      p.setVisible(true);
+        crear_Preguntas p = new crear_Preguntas();
+        p.setVisible(true);
         dispose();
-  
+
     }//GEN-LAST:event_jMenu3MouseClicked
 
     /**
